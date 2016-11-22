@@ -1,6 +1,8 @@
 # Background
 
-This repo shows how to use [git2go](https://github.com/libgit2/git2go) with [libgit2](https://libgit2.github.com/) to create a simple app that will clone a private repo using the https protocol.  It's OSX specific (for now), but the end has a start at how to xgo to cross-compile for other platforms.  
+This repo shows how to use [git2go](https://github.com/libgit2/git2go) with the c-based [libgit2](https://libgit2.github.com/) package to create a simple app that will clone a private repo using the https protocol.  
+
+It's OSX specific (for now), but the end has a start at how to [xgo](https://github.com/karalabe/xgo) to cross-compile for other platforms.  
 
 Here's some useful links to review:
 
@@ -8,16 +10,17 @@ Here's some useful links to review:
 * https://golog.co/blog/article/Git2Go
 * https://help.github.com/articles/checking-for-existing-ssh-keys
 
+## Install
 
-# Compiling libgit2 with xgo
-
-## Install [cmake](https://cmake.org/)
+Even if you're planning on using xgo, you need to have  [cmake](https://cmake.org/) so that you can build all the various c files into something go can use.
 
 ```
 brew install cmake
 ```
 
 ## Get git2go
+
+git2go is the Golang wrapper on top of libgit2:
 
 `go get github.com/libgit2/git2go`
 
@@ -66,6 +69,22 @@ equinox release \
 
 
 # Cross compiling the binary with xgo:
+
+[xgo](https://github.com/karalabe/xgo) is a Docker-based cross compiler for Go.  Basically, it puts a bunch of build environments as Docker images so that you can install their build toolchains more easily.
+
+To install it (from the projects README):
+
+```
+docker pull karalabe/xgo-latest
+```
+
+To prevent having to remember a potentially complex Docker command every time, a lightweight Go wrapper was written on top of it.
+
+```
+go get github.com/karalabe/xgo
+```
+
+Once you have this going, you can build a binary for a specific platform like this:
 
 ```
 xgo --targets=darwin/* .
