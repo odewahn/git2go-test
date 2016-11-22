@@ -8,14 +8,9 @@ import (
 	"github.com/libgit2/git2go"
 )
 
-// Useful articles:
-//   git2go godocs: https://godoc.org/github.com/libgit2/git2go
-//   private git access for libgit2: https://golog.co/blog/article/Git2Go
-//   default ssh keyfile names: https://help.github.com/articles/checking-for-existing-ssh-keys
-
 func credentialsCallback(url string, username string, allowedTypes git.CredType) (git.ErrorCode, *git.Cred) {
 	//ret, cred := git.NewCredSshKey("git", "/Users/odewahn/.ssh/id_rsa.pub", "/Users/odewahn/.ssh/id_rsa", "")
-	fmt.Print("Enter username: ")
+	fmt.Print("Enter your username: ")
 	var user string
 	fmt.Scanln(&user)
 
@@ -33,8 +28,9 @@ func certificateCheckCallback(cert *git.Certificate, valid bool, hostname string
 
 func main() {
 
-	//url := "git@git.atlas.oreilly.com:landers/lora-using-arduino.git"
-	//url := "https://git.atlas.oreilly.com/landers/lora-using-arduino.git"
+	if len(os.Args) < 2 {
+		log.Fatal("You must supply a git repo to download!")
+	}
 
 	cloneOptions := &git.CloneOptions{}
 	cloneOptions.FetchOptions = &git.FetchOptions{
@@ -44,6 +40,7 @@ func main() {
 		},
 	}
 
+	fmt.Println("Cloning repo to a directory named web.  Yup, web.  It's hardcoded, all right, since this is just a test..")
 	_, err := git.Clone(os.Args[1], "web", cloneOptions)
 	if err != nil {
 		log.Fatal(err)
