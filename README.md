@@ -10,19 +10,42 @@ Here's some useful links to review:
 * https://golog.co/blog/article/Git2Go
 * https://help.github.com/articles/checking-for-existing-ssh-keys
 
+## Before you start
+
+Install homebrew (if you don't already have it)
+
 ## Install
 
 Even if you're planning on using xgo, you need to have  [cmake](https://cmake.org/) so that you can build all the various c files into something go can use.
 
 ```
-brew install cmake
+brew install cmake pkg-config libssh2
 ```
+
+If you encouter problems locating libssh2 or zlib, try running this:
+
+```
+brew outdated "pkg-config" || brew upgrade "pkg-config"
+```
+
+See this [github thread for details](https://github.com/Homebrew/brew/issues/563)
 
 ## Get git2go
 
 git2go is the Golang wrapper on top of libgit2:
 
 `go get github.com/libgit2/git2go`
+
+Note that you'll get an error saying libgit2 not found:
+
+```
+# pkg-config --cflags libgit2
+Package libgit2 was not found in the pkg-config search path.
+Perhaps you should add the directory containing `libgit2.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'libgit2' found
+pkg-config: exit status 1
+```
 
 ## Load the c file for libgit2
 
@@ -32,6 +55,12 @@ This step initially confused me, but basically here you just go through the step
 cd $GOPATH/src/github.com/libgit2/git2go
 git checkout next
 git submodule update --init # get libgit2
+make
+```
+
+If everything works correctly, run this to install it:
+
+```
 make install
 ```
 
