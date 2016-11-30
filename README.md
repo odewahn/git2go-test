@@ -12,11 +12,23 @@ Here's some useful links to review:
 
 ## Before you start
 
+### Windows
+
+Coming soon. Well, maybe not soon. But coming.
+
+### Linux
+
+You'll need, at a minimum, libgit2-dev, libssh2-1-dev, libssl-dev, and cmake. For example, on Ubuntu:
+
+```
+sudo apt-get install libgit2-dev libssh2-1-dev libssl-dev cmake
+```
+
+### Mac OS X
+
 Install homebrew (if you don't already have it)
 
-## Install
-
-Even if you're planning on using xgo, you need to have  [cmake](https://cmake.org/) so that you can build all the various c files into something go can use.
+Even if you're planning on using xgo, you need to have  [cmake](https://cmake.org/) so that you can build all the various c files into something go can use. You'll also need pkg-config and libssh2:
 
 ```
 brew install cmake pkg-config libssh2
@@ -36,7 +48,7 @@ git2go is the Golang wrapper on top of libgit2:
 
 `go get github.com/libgit2/git2go`
 
-Note that you'll get an error saying libgit2 not found:
+Note that you'll get an error saying libgit2 not found. This is OK.
 
 ```
 # pkg-config --cflags libgit2
